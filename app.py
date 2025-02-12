@@ -12,7 +12,7 @@ app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# MongoDB Atlas Connection
+# MongoDB  Connection
 MONGO_URI = "mongodb+srv://<user>:<password>@audio-project.faluj.mongodb.net/?retryWrites=true&w=majority&appName=audio-project"
 client = MongoClient(MONGO_URI)
 db = client["fingerprint_db"]
@@ -27,7 +27,7 @@ def upload_file():
     filename = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(filename)
 
-    # Convert MP3 to WAV if needed
+    # Convert MP3 to WAV
     if filename.endswith(".mp3"):
         wav_filename = filename.replace(".mp3", ".wav")
         audio = AudioSegment.from_mp3(filename)
@@ -56,7 +56,7 @@ def match_fingerprint():
     filename = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(filename)
 
-    # Convert MP3 to WAV if needed
+    # Convert MP3 to WAV
     if filename.endswith(".mp3"):
         wav_filename = filename.replace(".mp3", ".wav")
         audio = AudioSegment.from_mp3(filename)
@@ -68,7 +68,7 @@ def match_fingerprint():
         y, sr = librosa.load(filename)
         new_fingerprint = librosa.feature.mfcc(y=y, sr=sr).tolist()
 
-        # Fetch the latest stored fingerprint
+        # Fetch the latest stored fingerprint form DB
         stored_data = fingerprint_collection.find_one({}, sort=[("_id", -1)])
 
         if stored_data is None or "fingerprint" not in stored_data:
@@ -76,7 +76,7 @@ def match_fingerprint():
 
         stored_fingerprint = stored_data["fingerprint"]
 
-        # Compare fingerprints (Basic Example)
+        # Compare fingerprints
         similarity = np.corrcoef(np.array(new_fingerprint).flatten(), np.array(stored_fingerprint).flatten())[0, 1]
 
         return jsonify({"message": "Matching completed", "similarity": float(similarity)})
