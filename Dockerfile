@@ -1,10 +1,10 @@
-# Use a minimal Python image
+# Minimal Python image
 FROM python:3.9-slim
 
-# Set the working directory
+#Work  directory
 WORKDIR /app
 
-# Install system dependencies required for audio processing
+# Install system dependencies for audio processing
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
     libsndfile1 \
