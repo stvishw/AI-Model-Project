@@ -1,4 +1,4 @@
-# Audio Fingerprint AI MODEL 🎵
+# Audio Fingerprint AI MODEL 
 
 This project allows users to upload audio files, generate fingerprints, and match them.
 
