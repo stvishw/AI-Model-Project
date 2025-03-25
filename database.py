@@ -13,9 +13,9 @@ try:
     if fingerprint_collection.count_documents({}) == 0:
         fingerprint_collection.insert_one({"message": "Collection created successfully!"})
 
-    print("✅ MongoDB Connected Successfully!")
+    print("mongoDB Connected Successfully!")
 except Exception as e:
-    print(f"❌ MongoDB Connection Failed: {e}")
+    print(f"mongoDB Connection Failed: {e}")
 
 
 
